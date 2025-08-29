@@ -69,13 +69,13 @@ public class YetAnotherFurnitureClient {
 
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, MailboxBlockEntity.packetChannel2, ((buf, context) -> {
             var pos = buf.readBlockPos();
-            var state = buf.readBoolean();
             var client = Minecraft.getInstance();
+            
             client.execute(() -> {
                 assert client.level != null;
                 var be = client.level.getBlockEntity(pos);
                 if (be instanceof MailboxBlockEntity mailbox) {
-                    mailbox.failedToSend = state;
+                    mailbox.targetString = "";
                     mailbox.setChanged();
                 }
             });
